@@ -1,0 +1,21 @@
+/* tailwind start - ignore linting warnings */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* tailwind end */
+
+:root {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  background-color: #dce7dc; /* fern-900 */
+  color: #0a0f0d; /* dark text for better contrast */
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #dce7dc; /* fern-900 */
+  color: inherit;
+  padding-top: 90px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
