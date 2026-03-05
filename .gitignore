@@ -1,7 +1,14 @@
+# Environment files
+**/.env
+**/.env.local
+**/.env.production
+
+
 # Python venv
 .venv/
 venv/
 the-cabin-oasis-be/venv/
+
 
 # Node dependencies
 **/node_modules/
@@ -10,10 +17,7 @@ the-cabin-oasis-be/venv/
 **/dist/
 **/.vite/
 
-# Environment files
-**/.env
-**/.env.local
-**/.env.production
+
 
 # IDE files
 .vscode/
