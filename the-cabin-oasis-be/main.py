@@ -153,12 +153,20 @@ app = FastAPI(
 )
 
 # Configure CORS
+allowed_origins = [
+    "http://localhost:5173",  # Admin panel on Vite dev server
+    "http://localhost:5174",  # Public website on Vite dev server
+    "https://the-cabin-oasis-client.onrender.com",  # Public site on Render
+    "https://the-cabin-oasis-admin.onrender.com",  # Admin panel on Render
+]
+
+render_backend_url = os.getenv("RENDER_EXTERNAL_URL")
+if render_backend_url:
+    allowed_origins.append(render_backend_url.rstrip("/"))
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",  # Admin panel on Vite dev server
-        "http://localhost:5174",  # Public website on Vite dev server
-    ],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
