@@ -7,6 +7,7 @@ import suiteCabinImage from '../images/suite_cabin.jfif';
 import forestviewCabinImage from '../images/forestview_cabin.png';
 import mountainviewCabinImage from '../images/mountainview_cabin.png';
 import lakeviewCabinImage from '../images/lakeview_cabin.png';
+import { apiUrl } from '../config/api';
 
 // Sample room data - in a real app, this would come from an API
 const fallbackRoomData = [
@@ -79,7 +80,7 @@ export default function Rooms() {
     const fetchCabins = async () => {
       try {
         // Only fetch cabins that are publicly available
-        const response = await fetch('http://localhost:3000/api/cabins/?status_filter=available');
+        const response = await fetch(apiUrl('/api/cabins/?status_filter=available'));
         console.log('Cabins API raw response:', response);
         if (!response.ok) {
           console.error('Cabins API returned non-OK status:', response.status);

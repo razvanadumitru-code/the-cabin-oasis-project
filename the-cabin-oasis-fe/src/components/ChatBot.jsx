@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-
-const API_BASE = 'http://localhost:3000/api';
+import { apiUrl } from '../config/api';
 
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +18,7 @@ const ChatBot = () => {
   useEffect(() => {
     const fetchCabinFacts = async () => {
       try {
-        const res = await fetch(`${API_BASE}/cabins/?status_filter=available`);
+        const res = await fetch(apiUrl('/api/cabins/?status_filter=available'));
         if (!res.ok) {
           return;
         }
@@ -304,7 +303,7 @@ Want me to check specific dates? Say something like "2026-07-10 to 2026-07-14" a
         const checkOut = dateMatch[2];
 
         try {
-          const res = await fetch(`${API_BASE}/cabins/available/${checkIn}/${checkOut}`);
+          const res = await fetch(apiUrl(`/api/cabins/available/${checkIn}/${checkOut}`));
           if (!res.ok) {
             addBotMessage('I could not verify availability right now. Please try again later or use the Rooms page.');
             return;
@@ -429,7 +428,7 @@ ${lines.join('\n')}`;
 
         try {
           const res = await fetch(
-            `${API_BASE}/bookings/public-exists/${bookingId}?email=${encodeURIComponent(email)}`
+            apiUrl(`/api/bookings/public-exists/${bookingId}?email=${encodeURIComponent(email)}`)
           );
           if (!res.ok) {
             addBotMessage(
@@ -470,7 +469,7 @@ ${lines.join('\n')}`;
         const [name, email, question] = parts;
 
         try {
-          const res = await fetch(`${API_BASE}/messages/`, {
+          const res = await fetch(apiUrl('/api/messages/'), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
+import { apiUrl } from '../config/api';
 
 const BookingForm = ({ bookingData }) => {
   const navigate = useNavigate();
@@ -94,7 +95,7 @@ const BookingForm = ({ bookingData }) => {
       // If we already have a pending backend booking, update it to keep the same ID
       if (backendBooking && backendBooking.status === 'pending') {
         const updateResponse = await fetch(
-          `http://localhost:3000/api/bookings/public-update-pending/${backendBooking.booking_id}`,
+          apiUrl(`/api/bookings/public-update-pending/${backendBooking.booking_id}`),
           {
             method: 'POST',
             headers: {
@@ -117,7 +118,7 @@ const BookingForm = ({ bookingData }) => {
         console.log('Updated booking:', createdOrUpdatedBooking);
       } else {
         // No existing pending booking, create a new one
-        const response = await fetch('http://localhost:3000/api/bookings/', {
+        const response = await fetch(apiUrl('/api/bookings/'), {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

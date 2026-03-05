@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { format } from 'date-fns';
+import { apiUrl } from '../config/api';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function CabinDetails() {
@@ -29,7 +31,7 @@ export default function CabinDetails() {
       try {
         setLoading(true);
         setError('');
-        const response = await fetch(`http://localhost:3000/api/cabins/${id}`);
+        const response = await fetch(apiUrl(`/api/cabins/${id}`));
         console.log('Cabin details API response:', response);
         if (!response.ok) {
           setError('Unable to load cabin details.');
@@ -98,7 +100,7 @@ export default function CabinDetails() {
         setAvailabilityMessage('Checking availability...');
 
         const response = await fetch(
-          `http://localhost:3000/api/cabins/available/${checkIn}/${checkOut}`
+          apiUrl(`/api/cabins/available/${checkIn}/${checkOut}`)
         );
         console.log('Cabin availability API response:', response);
 

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
+import { apiUrl } from '../config/api';
 import { useNavigate } from 'react-router-dom';
 
 export default function BookingSection({ selectedRoom }) {
@@ -42,7 +43,7 @@ export default function BookingSection({ selectedRoom }) {
         setAvailabilityMessage('Checking availability...');
 
         const response = await fetch(
-          `http://localhost:3000/api/cabins/available/${checkIn}/${checkOut}`
+          apiUrl(`/api/cabins/available/${checkIn}/${checkOut}`)
         );
         console.log('Availability API raw response:', response);
 
