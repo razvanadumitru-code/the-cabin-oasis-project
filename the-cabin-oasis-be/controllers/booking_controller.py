@@ -103,6 +103,7 @@ class BookingController:
         total_price = nights * cabin.price_per_night
 
         # Create booking
+        now = datetime.utcnow()
         db_booking = Booking(
             customer_id=customer_id,
             cabin_id=booking_data.cabin_id,
@@ -112,7 +113,8 @@ class BookingController:
             total_price=total_price,
             special_requests=booking_data.special_requests,
             status=BookingStatus.pending,
-            expires_at=datetime.utcnow() + timedelta(minutes=15)
+            expires_at=now + timedelta(minutes=15),
+            updated_at=now,
         )
 
         db.add(db_booking)
