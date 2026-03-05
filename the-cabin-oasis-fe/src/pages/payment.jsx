@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
+import { apiUrl } from '../config/api';
 
 export default function PaymentMethod() {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ export default function PaymentMethod() {
     try {
       setIsProcessing(true);
 
-      const response = await fetch('http://localhost:3000/api/payments/create-checkout-session', {
+      const response = await fetch(apiUrl('/api/payments/create-checkout-session'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
