@@ -48,8 +48,7 @@ CREATE TABLE `admin_settings` (
 -- Dumping data for table `admin_settings`
 --
 
-INSERT INTO `admin_settings` (`id`, `new_bookings`, `booking_cancellations`, `payment_updates`, `system_maintenance`, `email_notifications`, `admin_email`, `notification_frequency`, `essential_cookies`, `analytics_cookies`, `functional_cookies`, `marketing_cookies`, `two_factor_auth`, `session_timeout`) VALUES
-(1, 1, 1, 1, 1, 1, 'razvan@cabana.ro', 'realtime', 1, 0, 0, 1, 0, '30');
+
 
 -- --------------------------------------------------------
 
@@ -76,10 +75,6 @@ CREATE TABLE `bookings` (
 -- Dumping data for table `bookings`
 --
 
-INSERT INTO `bookings` (`booking_id`, `customer_id`, `cabin_id`, `check_in_date`, `check_out_date`, `num_guests`, `total_price`, `status`, `special_requests`, `created_at`, `updated_at`, `expires_at`) VALUES
-(1, 1, 6, '2026-02-23', '2026-02-25', 2, 1000.00, 'cancelled', 'vreau vila cu pisicina', '2026-02-22 20:29:18', '2026-02-22 20:45:15', '2026-02-22 18:44:18'),
-(2, 2, 2, '2026-02-24', '2026-02-25', 1, 450.00, 'cancelled', NULL, '2026-02-23 20:43:41', '2026-02-25 16:59:20', '2026-02-23 18:58:41'),
-(3, 3, 6, '2026-03-11', '2026-03-13', 1, 1000.00, 'confirmed', NULL, '2026-03-04 14:02:28', '2026-03-04 14:04:05', '2026-03-04 12:17:28');
 
 -- --------------------------------------------------------
 
@@ -108,13 +103,7 @@ CREATE TABLE `cabins` (
 -- Dumping data for table `cabins`
 --
 
-INSERT INTO `cabins` (`id`, `name`, `description`, `capacity`, `bedrooms`, `bathrooms`, `price_per_night`, `image_url`, `is_available`, `created_at`, `updated_at`, `status`, `amenities`, `location`) VALUES
-(1, 'Lakeside Cabin', 'Charming lakefront cabin with private dock and sunset views. Ideal for couples or small families.', 4, 0, 0.0, 350.00, 'http://localhost:3000/images/lakeview_cabin.png', 1, '2026-02-22 15:22:25', '2026-02-22 18:40:30', 'available', 'WiFi,Lake Access,Kayaks,Fishing Gear,Fire Pit,Coffee Maker', 'Lake Area'),
-(2, 'Mountainview Cabin', ' Luxurious mountain cabin with stunning panoramic views. Perfect for families seeking adventure and relaxation.', 6, 0, 0.0, 450.00, 'http://localhost:3000/images/mountainview_cabin.png', 1, '2026-02-22 15:58:44', '2026-02-22 14:00:28', 'available', 'WiFi, Fireplace, Mountain View, Hot Tub, BBQ Grill, Full Kitchen', NULL),
-(3, 'Forestview Cabin', 'Intimate forest cabin surrounded by towering pines. Perfect romantic getaway with cozy interiors.', 4, 0, 0.0, 200.00, 'http://localhost:3000/images/forestview_cabin.png', 1, '2026-02-22 16:02:39', '2026-02-22 14:03:42', 'available', 'WiFi,Forest Trail Access,Wood Stove,Reading Nook,Hammock', 'Forest Area'),
-(4, 'Standard Cabin', 'Comfortable standard cabin perfect for couples on a budget. Clean, cozy, and equipped with essential amenities for a pleasant stay.', 2, 0, 0.0, 150.00, 'http://localhost:3000/images/standard_cabin.png', 1, '2026-02-22 16:07:24', '2026-02-22 16:07:24', 'available', 'WiFi, Parking, Coffee Maker, Basic Kitchen', 'Cabin Area'),
-(5, 'Deluxe Cabin', 'Upgraded deluxe cabin with modern comforts and stylish interiors. Features premium furnishings, a private terrace, and luxury bathroom amenities.', 4, 0, 0.0, 350.00, 'http://localhost:3000/images/deluxe_cabin.png', 1, '2026-02-22 16:08:33', '2026-02-22 18:27:41', 'available', 'WiFi, Fireplace, Terrace, Full Kitchen, Smart TV, Premium Bedding, Coffee Machine', 'Cabin Area'),
-(6, 'Suite Cabin', 'Luxury suite cabin with premium amenities and elegant design. Features a master suite with spa-like bathroom, gourmet kitchen, and private hot tub under the stars.', 6, 0, 0.0, 500.00, 'http://localhost:3000/images/suite_cabin.jfif', 1, '2026-02-22 16:09:37', '2026-03-04 12:05:08', 'available', 'WiFi, Hot Tub, Sauna, Wine Cooler, King Bed, En-suite Bathrooms, Gourmet Kitchen, Sound System', 'Cabin Area');
+
 
 -- --------------------------------------------------------
 
@@ -134,10 +123,6 @@ CREATE TABLE `customers` (
 -- Dumping data for table `customers`
 --
 
-INSERT INTO `customers` (`customer_id`, `name`, `email`, `phone`, `created_at`) VALUES
-(1, 'gogu', 'gogu@test.ro', '0733333333', '2026-02-22 20:29:18'),
-(2, 'doe doe', 'doe@test.ro', '1234567890', '2026-02-23 20:43:40'),
-(3, 'Razvan Andrei', 'razvan@test.ro', '0712121121', '2026-03-04 14:02:28');
 
 -- --------------------------------------------------------
 
@@ -183,10 +168,6 @@ CREATE TABLE `messages` (
 -- Dumping data for table `messages`
 --
 
-INSERT INTO `messages` (`message_id`, `name`, `email`, `phone`, `subject`, `content`, `customer_id`, `staff_id`, `created_at`, `updated_at`, `category`, `is_read`, `sent_at`, `is_starred`, `is_archived`, `is_deleted`) VALUES
-(1, 'gogu', 'gogu@test.ro', '0733333333', 'Booking Cancelled - Payment Not Received', 'Dear gogu,\n\nYour booking at The Cabin Oasis has expired and was cancelled because payment was not completed in time.\n\nCabin: Suite Cabin\nCheck-in: 2026-02-23\nCheck-out: 2026-02-25\nGuests: 2\nBooking ID: 1\n\nIf you still wish to stay with us, please create a new reservation on our website.\nThe Cabin Oasis Team', 1, NULL, '2026-02-22 20:45:15', '2026-02-22 20:45:15', 'booking', 1, '2026-02-22 20:45:15', 0, 0, 0),
-(2, 'doe doe', 'doe@test.ro', '1234567890', 'Booking Cancelled - Payment Not Received', 'Dear doe doe,\n\nYour booking at The Cabin Oasis has expired and was cancelled because payment was not completed in time.\n\nCabin: Mountainview Cabin\nCheck-in: 2026-02-24\nCheck-out: 2026-02-25\nGuests: 1\nBooking ID: 2\n\nIf you still wish to stay with us, please create a new reservation on our website.\nThe Cabin Oasis Team', 2, NULL, '2026-02-25 16:59:20', '2026-02-25 16:59:20', 'booking', 1, '2026-02-25 16:59:20', 0, 0, 0),
-(3, 'Razvan Andrei', 'razvan@test.ro', '0712121121', 'Booking Confirmed - Booking #3', 'Dear Razvan Andrei,\n\nYour booking at The Cabin Oasis has been confirmed!\n\nCabin: Suite Cabin\nCheck-in: 2026-03-11\nCheck-out: 2026-03-13\nGuests: 1\nTotal: $1000.00\nBooking ID: 3\n\nWe look forward to welcoming you.\nThe Cabin Oasis Team', 3, NULL, '2026-03-04 14:04:06', '2026-03-04 14:04:06', 'booking', 1, '2026-03-04 14:04:06', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -207,13 +188,7 @@ CREATE TABLE `notifications` (
 -- Dumping data for table `notifications`
 --
 
-INSERT INTO `notifications` (`notification_id`, `staff_id`, `title`, `message`, `is_read`, `created_at`) VALUES
-(1, 2, 'New Booking', 'A new booking has been created for cabin Suite Cabin by gogu. Booking ID: 1', 0, '2026-02-22 22:29:18'),
-(2, 4, 'New Booking', 'A new booking has been created for cabin Suite Cabin by gogu. Booking ID: 1', 1, '2026-02-22 22:29:18'),
-(3, 2, 'New Booking', 'A new booking has been created for cabin Mountainview Cabin by doe doe. Booking ID: 2', 0, '2026-02-23 22:43:41'),
-(4, 4, 'New Booking', 'A new booking has been created for cabin Mountainview Cabin by doe doe. Booking ID: 2', 1, '2026-02-23 22:43:41'),
-(5, 2, 'New Booking', 'A new booking has been created for cabin Suite Cabin by Razvan Andrei. Booking ID: 3', 0, '2026-03-04 16:02:28'),
-(6, 4, 'New Booking', 'A new booking has been created for cabin Suite Cabin by Razvan Andrei. Booking ID: 3', 1, '2026-03-04 16:02:28');
+
 
 -- --------------------------------------------------------
 
@@ -237,9 +212,6 @@ CREATE TABLE `staff` (
 -- Dumping data for table `staff`
 --
 
-INSERT INTO `staff` (`staff_id`, `full_name`, `email`, `phone`, `role`, `password_hash`, `created_at`, `updated_at`, `status`) VALUES
-(2, 'Admin Principal', 'admin@cabana.ro', NULL, 'admin', '$2b$12$RzTyz1Z3jH1EKsKa50kMluwL3f9b8uGHro72uX./y4VEQ/kWZ3gd6', '2026-02-15 20:30:52', '2026-02-15 20:30:52', 1),
-(4, 'razvan d', 'razvan@cabana.ro', '', 'admin', '$2b$12$jVHqJfZBHEWEwtNv38SrG.L0qnbxsQpdh2hgp.sMZ.bywFTEt/sQ2', '2026-02-20 17:42:26', '2026-02-20 16:47:22', 1);
 
 -- --------------------------------------------------------
 
@@ -264,8 +236,6 @@ CREATE TABLE `transactions` (
 -- Dumping data for table `transactions`
 --
 
-INSERT INTO `transactions` (`transaction_id`, `booking_id`, `amount`, `payment_method`, `transaction_date`, `status`, `payment_reference`, `notes`, `created_at`, `updated_at`) VALUES
-(1, 3, 1000.00, 'card', '2026-03-04 14:04:05', 'completed', NULL, NULL, '2026-03-04 14:04:05', '2026-03-04 14:04:05');
 
 -- --------------------------------------------------------
 
