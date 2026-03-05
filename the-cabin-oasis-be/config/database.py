@@ -9,17 +9,31 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Database configuration
+db_user = os.getenv("DB_USER", "root")
+db_password = os.getenv("DB_PASSWORD", "")
+db_host = os.getenv("DB_HOST", "localhost")
+db_port = os.getenv("DB_PORT", "3306")
+db_name = os.getenv("DB_NAME", "cabana_db")
+
 DATABASE_URL = (
-    f"mysql+pymysql://"
-    f"{os.getenv('DB_USER', 'root')}:"
-    f"{os.getenv('DB_PASSWORD', '')}@"
-    f"{os.getenv('DB_HOST', 'localhost')}/"
-    f"{os.getenv('DB_NAME', 'cabana_db')}"
+    "mysql+pymysql://"
+    f"{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
 )
+
+ssl_ca_path = os.getenv("DB_SSL_CA")
+ssl_required = os.getenv("DB_SSL_MODE", "required").lower() == "required"
+connect_args = {}
+
+if ssl_ca_path:
+    connect_args["ssl"] = {"ca": ssl_ca_path}
+elif ssl_required:
+    # Require TLS even if a custom CA isn't provided
+    connect_args["ssl"] = {}
 
 # Create SQLAlchemy engine
 engine = create_engine(
     DATABASE_URL,
+    connect_args=connect_args,
     poolclass=QueuePool,
     pool_size=10,
     max_overflow=20,
