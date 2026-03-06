@@ -1,5 +1,6 @@
 from datetime import datetime
 import os
+from urllib.parse import urlencode, urlparse, urlunparse, parse_qsl
 
 import stripe
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -21,6 +22,24 @@ router = APIRouter()
 # Stripe configuration (test mode)
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 STRIPE_CURRENCY = os.getenv("STRIPE_CURRENCY", "usd")  # change to "ron" later when ready
+
+
+def _ensure_query_param(url: str, key: str, value: str) -> str:
+    """Ensure the given query param exists on the URL."""
+    parsed = list(urlparse(url))
+    query = dict(parse_qsl(parsed[4], keep_blank_values=True))
+    query[key] = value
+    parsed[4] = urlencode(query)
+    return urlunparse(parsed)
+
+
+def _ensure_query_param(url: str, key: str, value: str) -> str:
+    """Ensure the given query param exists on the URL."""
+    parsed = list(urlparse(url))
+    query = dict(parse_qsl(parsed[4], keep_blank_values=True))
+    query[key] = value
+    parsed[4] = urlencode(query)
+    return urlunparse(parsed)
 
 
 @router.post("/create-checkout-session")
@@ -64,11 +83,23 @@ async def create_checkout_session(
     # Build success/cancel URLs for the website frontend
     success_url = os.getenv(
         "FRONTEND_SUCCESS_URL",
-        f"http://localhost:5174/payment-success?booking_id={booking.booking_id}&session_id={{CHECKOUT_SESSION_ID}}",
+        "http://localhost:5174/payment-success",
     )
     cancel_url = os.getenv(
         "FRONTEND_CANCEL_URL",
-        f"http://localhost:5174/payment-cancel?booking_id={booking.booking_id}",
+        "http://localhost:5174/payment-cancel",
+    )
+
+    # Ensure required query parameters are present even if env vars omit them
+    success_url = _ensure_query_param(
+        _ensure_query_param(success_url, "booking_id", str(booking.booking_id)),
+        "session_id",
+        "{CHECKOUT_SESSION_ID}",
+    )
+    cancel_url = _ensure_query_param(
+        cancel_url,
+        "booking_id",
+        str(booking.booking_id),
     )
 
     try:
