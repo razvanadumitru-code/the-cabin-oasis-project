@@ -38,6 +38,13 @@ export default function BookingSection({ selectedRoom }) {
       const checkIn = format(dateRange[0].startDate, 'yyyy-MM-dd');
       const checkOut = format(dateRange[0].endDate, 'yyyy-MM-dd');
 
+      // Require at least one night stay before calling the availability API
+      if (checkIn === checkOut) {
+        setIsAvailable(null);
+        setAvailabilityMessage('Please select at least one night (check-out after check-in).');
+        return;
+      }
+
       try {
         setIsCheckingAvailability(true);
         setAvailabilityMessage('Checking availability...');
