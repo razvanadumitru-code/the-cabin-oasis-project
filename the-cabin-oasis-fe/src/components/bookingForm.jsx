@@ -92,6 +92,29 @@ const BookingForm = ({ bookingData }) => {
     try {
       let createdOrUpdatedBooking = null;
 
+      const createNewBooking = async () => {
+        const response = await fetch(apiUrl('/api/bookings/'), {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        });
+
+        console.log('Create booking API response:', response);
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error('Failed to create booking:', errorText);
+          alert('Could not create booking. Please check your details and try again.');
+          return null;
+        }
+
+        const data = await response.json();
+        console.log('Created booking:', data);
+        return data;
+      };
+
       // If we already have a pending backend booking, update it to keep the same ID
       if (backendBooking && backendBooking.status === 'pending') {
         const updateResponse = await fetch(
@@ -110,33 +133,33 @@ const BookingForm = ({ bookingData }) => {
         if (!updateResponse.ok) {
           const errorText = await updateResponse.text();
           console.error('Failed to update pending booking:', errorText);
-          alert('Could not update your booking. It may have expired; please try again.');
-          return;
-        }
+          const normalized = errorText.toLowerCase();
 
-        createdOrUpdatedBooking = await updateResponse.json();
-        console.log('Updated booking:', createdOrUpdatedBooking);
+          const isStaleBooking =
+            updateResponse.status === 400 &&
+            (normalized.includes('only pending bookings') || normalized.includes('expired'));
+
+          if (isStaleBooking) {
+            // Clear stale booking cache and fall back to creating a brand new booking
+            sessionStorage.removeItem('backendBooking');
+            createdOrUpdatedBooking = await createNewBooking();
+            if (!createdOrUpdatedBooking) {
+              return;
+            }
+          } else {
+            alert('Could not update your booking. It may have expired; please try again.');
+            return;
+          }
+        } else {
+          createdOrUpdatedBooking = await updateResponse.json();
+          console.log('Updated booking:', createdOrUpdatedBooking);
+        }
       } else {
         // No existing pending booking, create a new one
-        const response = await fetch(apiUrl('/api/bookings/'), {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(payload),
-        });
-
-        console.log('Create booking API response:', response);
-
-        if (!response.ok) {
-          const errorText = await response.text();
-          console.error('Failed to create booking:', errorText);
-          alert('Could not create booking. Please check your details and try again.');
+        createdOrUpdatedBooking = await createNewBooking();
+        if (!createdOrUpdatedBooking) {
           return;
         }
-
-        createdOrUpdatedBooking = await response.json();
-        console.log('Created booking:', createdOrUpdatedBooking);
       }
 
       // Store user form data and backend booking in sessionStorage
