@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { apiUrl } from '../config/api';
 
 export default function PaymentSuccess() {
   const navigate = useNavigate();
@@ -26,14 +27,12 @@ export default function PaymentSuccess() {
 
     const confirmBooking = async () => {
       try {
-        const url = new URL(
-          `http://localhost:3000/api/payments/confirm-booking/${bookingId}`
-        );
+        let endpoint = `/api/payments/confirm-booking/${bookingId}`;
         if (sessionId) {
-          url.searchParams.set('session_id', sessionId);
+          endpoint += `?session_id=${encodeURIComponent(sessionId)}`;
         }
 
-        const response = await fetch(url.toString(), {
+        const response = await fetch(apiUrl(endpoint), {
           method: 'POST',
         });
 
