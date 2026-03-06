@@ -24,21 +24,15 @@ STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 STRIPE_CURRENCY = os.getenv("STRIPE_CURRENCY", "usd")  # change to "ron" later when ready
 
 
-def _ensure_query_param(url: str, key: str, value: str) -> str:
+def _ensure_query_param(url: str, key: str, value: str, preserve_braces: bool = False) -> str:
     """Ensure the given query param exists on the URL."""
     parsed = list(urlparse(url))
     query = dict(parse_qsl(parsed[4], keep_blank_values=True))
     query[key] = value
-    parsed[4] = urlencode(query)
-    return urlunparse(parsed)
-
-
-def _ensure_query_param(url: str, key: str, value: str) -> str:
-    """Ensure the given query param exists on the URL."""
-    parsed = list(urlparse(url))
-    query = dict(parse_qsl(parsed[4], keep_blank_values=True))
-    query[key] = value
-    parsed[4] = urlencode(query)
+    encoded_query = urlencode(query)
+    if preserve_braces:
+        encoded_query = encoded_query.replace('%7B', '{').replace('%7D', '}')
+    parsed[4] = encoded_query
     return urlunparse(parsed)
 
 
@@ -95,6 +89,7 @@ async def create_checkout_session(
         _ensure_query_param(success_url, "booking_id", str(booking.booking_id)),
         "session_id",
         "{CHECKOUT_SESSION_ID}",
+        preserve_braces=True,
     )
     cancel_url = _ensure_query_param(
         cancel_url,
