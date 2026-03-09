@@ -305,9 +305,9 @@ export default function CabinDetails() {
               </div>
             </div>
 
-            {/* Sticky Booking Sidebar */}
+            {/* Booking Sidebar: sticky on desktop, stacked on mobile */}
             <div className="lg:col-span-1">
-              <div className={`${isMobile ? 'fixed bottom-0 left-0 right-0 z-50' : 'sticky top-24'} bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-fern-400/30 shadow-lg`}>
+              <div className={`${isMobile ? 'relative' : 'sticky top-24'} bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-fern-400/30 shadow-lg`}>
                 <div className="mb-6">
                   <div className="flex justify-between items-center mb-4">
                     <h3 className="text-xl font-bold text-fern-400">Booking Details</h3>
