@@ -205,12 +205,13 @@ async def confirm_payment(
         raise HTTPException(status_code=404, detail="Booking not found")
     
     if booking.status == BookingStatus.confirmed:
-        # Create transaction
+        # Create transaction (ensure updated_at is set to satisfy NOT NULL constraint)
         transaction = Transaction(
             booking_id=booking.booking_id,
             amount=booking.total_price,
             payment_method="card",
             status=TransactionStatus.completed,
+            updated_at=datetime.utcnow(),
         )
         db.add(transaction)
         db.commit()

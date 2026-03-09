@@ -203,12 +203,13 @@ async def confirm_booking_payment(
     # Mark as confirmed
     booking.status = BookingStatus.confirmed
 
-    # Create transaction record
+    # Create transaction record (updated_at is NOT NULL in DB, so set it explicitly)
     transaction = Transaction(
         booking_id=booking.booking_id,
         amount=booking.total_price,
         payment_method="card",
         status=TransactionStatus.completed,
+        updated_at=datetime.utcnow(),
     )
     db.add(transaction)
     db.commit()
