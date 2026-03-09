@@ -123,7 +123,7 @@ const Navbar = () => {
         </div>
         {/* Mobile dropdown menu */}
         {isMobileOpen && (
-          <div className="md:hidden pt-3 pb-4 space-y-1 border-t border-dry_sage-300/40 bg-pine_teal-600/95 text-dry_sage-50 shadow-lg">
+          <div className="md:hidden pt-2 pb-3 space-y-1 border-t border-dry_sage-300/40 bg-transparent">
             {navItems.map((item) => (
               <Link
                 key={item.name}
@@ -132,7 +132,9 @@ const Navbar = () => {
                   scrollToTop();
                   setIsMobileOpen(false);
                 }}
-                className="block px-3 py-2 rounded-md text-base font-medium text-dry_sage-50 hover:bg-pine_teal-700/80 hover:text-fern-300"
+                className={`block px-3 py-2 rounded-md text-base font-medium ${
+                  scrolled ? 'text-dust_grey-700' : 'text-pine_teal-800'
+                } hover:bg-white/30 hover:text-fern-600`}
               >
                 {item.name}
               </Link>
