@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Eye, EyeOff, LogIn, Home } from 'lucide-react';
+import { apiUrl } from '../utils/assets';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -39,7 +40,7 @@ export default function Login() {
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center mb-4">
             <img
-              src="http://localhost:3000/images/cabin_logo.png"
+              src={apiUrl('/images/cabin_logo.png')}
               alt="Cabin Oasis Logo"
               className="w-32 h-32 object-contain rounded-full border-2 border-slate-600 p-2 bg-slate-900/50"
             />
