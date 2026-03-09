@@ -5,6 +5,7 @@ import cabinLogo from '../images/cabin_logo.png';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   // Scroll to top function
   const scrollToTop = () => {
@@ -39,7 +40,14 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0 flex items-center">
-            <Link to="/" className="flex items-center space-x-3" onClick={scrollToTop}>
+            <Link
+              to="/"
+              className="flex items-center space-x-3"
+              onClick={() => {
+                scrollToTop();
+                setIsMobileOpen(false);
+              }}
+            >
               <img 
                 src={cabinLogo} 
                 alt="Cabin Oasis Logo" 
@@ -88,13 +96,61 @@ const Navbar = () => {
 
           {/* Mobile menu button */}
           <div className="md:hidden">
-            <button className="text-pine_teal-900 hover:text-fern-500 focus:outline-none">
+            <button
+              className="text-pine_teal-900 hover:text-fern-500 focus:outline-none"
+              onClick={() => setIsMobileOpen((open) => !open)}
+              aria-label="Toggle navigation menu"
+            >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+                {isMobileOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16m-7 6h7"
+                  />
+                )}
               </svg>
             </button>
           </div>
         </div>
+        {/* Mobile dropdown menu */}
+        {isMobileOpen && (
+          <div className="md:hidden pt-2 pb-4 space-y-1 border-t border-dry_sage-300/40 bg-pine_teal-50/95">
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                to={item.path}
+                onClick={() => {
+                  scrollToTop();
+                  setIsMobileOpen(false);
+                }}
+                className={`block px-3 py-2 rounded-md text-base font-medium ${
+                  scrolled ? 'text-dust_grey-700' : 'text-pine_teal-800'
+                } hover:bg-white/40 hover:text-fern-600`}
+              >
+                {item.name}
+              </Link>
+            ))}
+            <Link
+              to="/rooms"
+              onClick={() => {
+                scrollToTop();
+                setIsMobileOpen(false);
+              }}
+              className="mt-2 block px-3 py-2 rounded-md bg-fern-400 text-pine_teal-900 text-base font-medium text-center hover:bg-fern-500"
+            >
+              Book Now
+            </Link>
+          </div>
+        )}
       </div>
     </nav>
   );
