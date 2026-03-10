@@ -341,10 +341,22 @@ const BookingForm = ({ bookingData }) => {
                             : ''
                         }`}
                       >
-                        <div className="text-sm font-semibold text-fern-700">{room.name}</div>
-                        <div className="text-xs text-fern-500">{room.price}</div>
+                        <div
+                          className={`text-sm font-semibold ${
+                            formData.roomType === room.id ? 'text-fern-700' : 'text-black'
+                          }`}
+                        >
+                          {room.name}
+                        </div>
+                        <div
+                          className={`text-xs font-medium ${
+                            formData.roomType === room.id ? 'text-fern-600' : 'text-black'
+                          }`}
+                        >
+                          {room.price}
+                        </div>
                         {bookingData && bookingData.roomType === room.id && (
-                          <div className="text-xs text-fern-500 mt-1">Selected</div>
+                          <div className="text-xs text-fern-600 mt-1">Selected</div>
                         )}
                       </label>
                     </div>
