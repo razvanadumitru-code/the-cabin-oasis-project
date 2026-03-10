@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import api from '../api';
 
 const AuthContext = createContext();
@@ -19,7 +19,9 @@ export const AuthProvider = ({ children }) => {
       setUser(response.data);
     } catch (error) {
       console.error('Failed to fetch user:', error);
-      logout();
+      logout('Session expired. Please log in again.', 'error');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -34,7 +36,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const interceptor = api.interceptors.request.use(
+    const requestInterceptor = api.interceptors.request.use(
       (config) => {
         const token = localStorage.getItem('token');
         if (token) {
@@ -47,9 +49,33 @@ export const AuthProvider = ({ children }) => {
     );
 
     return () => {
-      api.interceptors.request.eject(interceptor);
+      api.interceptors.request.eject(requestInterceptor);
     };
   }, []);
+
+  const logout = useCallback((message = 'Logged out', type = 'success') => {
+    setToken(null);
+    setUser(null);
+    localStorage.removeItem('token');
+    setToast({ message, type });
+  }, []);
+
+  useEffect(() => {
+    const responseInterceptor = api.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (error?.response?.status === 401) {
+          logout('Session expired. Please log in again.', 'error');
+        }
+
+        return Promise.reject(error);
+      }
+    );
+
+    return () => {
+      api.interceptors.response.eject(responseInterceptor);
+    };
+  }, [logout]);
 
   const login = async (email, password) => {
     try {
@@ -81,13 +107,6 @@ export const AuthProvider = ({ children }) => {
       }
       return { success: false };
     }
-  };
-
-  const logout = () => {
-    setToken(null);
-    setUser(null);
-    localStorage.removeItem('token');
-    setToast({ message: 'Logged out', type: 'success' });
   };
 
   const clearToast = () => {
