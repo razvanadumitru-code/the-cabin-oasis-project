@@ -243,7 +243,7 @@ const BookingForm = ({ bookingData }) => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="block w-full pl-10 pr-3 py-2 border border-dust_grey-300 rounded-lg focus:ring-2 focus:ring-fern-200 focus:border-fern-400 text-pine_teal-900 placeholder-dust_grey-400 transition-all duration-200"
+                    className="block w-full pl-10 pr-3 py-2 border border-dust_grey-300 rounded-lg focus:ring-2 focus:ring-fern-200 focus:border-fern-400 text-black placeholder-dust_grey-400 transition-all duration-200"
                     placeholder="your@email.com"
                   />
                 </div>
@@ -265,7 +265,7 @@ const BookingForm = ({ bookingData }) => {
                     value={formData.phone}
                     onChange={handleChange}
                     required
-                    className="block w-full pl-10 pr-3 py-2 border border-dust_grey-300 rounded-lg focus:ring-2 focus:ring-fern-200 focus:border-fern-400 text-pine_teal-900 placeholder-dust_grey-400 transition-all duration-200"
+                    className="block w-full pl-10 pr-3 py-2 border border-dust_grey-300 rounded-lg focus:ring-2 focus:ring-fern-200 focus:border-fern-400 text-black placeholder-dust_grey-400 transition-all duration-200"
                     placeholder="(123) 456-7890"
                   />
                 </div>
@@ -287,7 +287,7 @@ const BookingForm = ({ bookingData }) => {
                     value={formData.checkIn}
                     onChange={handleChange}
                     required
-                    className="block w-full pl-10 pr-3 py-2 border border-dust_grey-300 rounded-lg focus:ring-2 focus:ring-fern-200 focus:border-fern-400 text-pine_teal-900 placeholder-dust_grey-400 transition-all duration-200"
+                    className="block w-full pl-10 pr-3 py-2 border border-dust_grey-300 rounded-lg focus:ring-2 focus:ring-fern-200 focus:border-fern-400 text-black placeholder-dust_grey-400 transition-all duration-200"
                   />
                 </div>
               </div>
@@ -308,7 +308,7 @@ const BookingForm = ({ bookingData }) => {
                     value={formData.checkOut}
                     onChange={handleChange}
                     required
-                    className="block w-full pl-10 pr-3 py-2 border border-dust_grey-300 rounded-lg focus:ring-2 focus:ring-fern-200 focus:border-fern-400 text-pine_teal-900 placeholder-dust_grey-400 transition-all duration-200"
+                    className="block w-full pl-10 pr-3 py-2 border border-dust_grey-300 rounded-lg focus:ring-2 focus:ring-fern-200 focus:border-fern-400 text-black placeholder-dust_grey-400 transition-all duration-200"
                   />
                 </div>
               </div>
@@ -333,7 +333,7 @@ const BookingForm = ({ bookingData }) => {
                         htmlFor={room.id}
                         className={`block p-3 border rounded-lg cursor-pointer transition-all duration-200 ${
                           formData.roomType === room.id
-                            ? 'border-fern-500 bg-fern-50 shadow-md'
+                            ? 'border-fern-600 bg-fern-600 shadow-md text-white'
                             : 'border-dust_grey-300 hover:border-fern-300'
                         } ${
                           bookingData && bookingData.roomType === room.id
@@ -343,27 +343,27 @@ const BookingForm = ({ bookingData }) => {
                       >
                         <div
                           className={`text-sm font-semibold ${
-                            formData.roomType === room.id ? 'text-fern-700' : 'text-black'
+                            formData.roomType === room.id ? 'text-white' : 'text-black'
                           }`}
                         >
                           {room.name}
                         </div>
                         <div
                           className={`text-xs font-medium ${
-                            formData.roomType === room.id ? 'text-fern-600' : 'text-black'
+                            formData.roomType === room.id ? 'text-white/90' : 'text-black'
                           }`}
                         >
                           {room.price}
                         </div>
                         {bookingData && bookingData.roomType === room.id && (
-                          <div className="text-xs text-fern-600 mt-1">Selected</div>
+                          <div className="text-xs text-white/90 mt-1">Selected</div>
                         )}
                       </label>
                     </div>
                   ))}
                 </div>
                 {bookingData && (
-                  <p className="text-xs text-dust_grey-500 mt-1">Room type pre-selected from your cabin choice</p>
+                  <p className="text-xs text-dust_grey-600 mt-1">Room type pre-selected from your cabin choice</p>
                 )}
               </div>
 
