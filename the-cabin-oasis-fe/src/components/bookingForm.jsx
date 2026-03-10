@@ -220,7 +220,7 @@ const BookingForm = ({ bookingData }) => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="block w-full pl-10 pr-3 py-2 border border-dust_grey-300 rounded-lg focus:ring-2 focus:ring-fern-200 focus:border-fern-400 text-black placeholder-dust_grey-400 transition-all duration-200"
+                    className="block w-full pl-10 pr-3 py-2 border border-dust_grey-300 rounded-lg focus:ring-2 focus:ring-fern-200 focus:border-fern-400 text-black placeholder-dust_grey-400 text-[16px] md:text-base transition-all duration-200"
                     placeholder="John Doe"
                   />
                 </div>
@@ -381,7 +381,7 @@ const BookingForm = ({ bookingData }) => {
                     name="guests"
                     value={formData.guests}
                     onChange={handleChange}
-                    className="block w-full pl-10 pr-3 py-2 border border-dust_grey-300 rounded-lg focus:ring-2 focus:ring-fern-200 focus:border-fern-400 text-black"
+                    className="block w-full pl-10 pr-3 py-2 border border-dust_grey-300 rounded-lg focus:ring-2 focus:ring-fern-200 focus:border-fern-400 text-black text-[16px] md:text-base"
                   >
                     {[1, 2, 3, 4, 5, '6+'].map((num) => (
                       <option key={num} value={num}>
