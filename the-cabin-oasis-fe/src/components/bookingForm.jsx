@@ -220,7 +220,7 @@ const BookingForm = ({ bookingData }) => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="block w-full pl-10 pr-3 py-2 border border-dust_grey-300 rounded-lg focus:ring-2 focus:ring-fern-200 focus:border-fern-400 text-pine_teal-900 placeholder-dust_grey-400 transition-all duration-200"
+                    className="block w-full pl-10 pr-3 py-2 border border-dust_grey-300 rounded-lg focus:ring-2 focus:ring-fern-200 focus:border-fern-400 text-black placeholder-dust_grey-400 transition-all duration-200"
                     placeholder="John Doe"
                   />
                 </div>
@@ -341,8 +341,8 @@ const BookingForm = ({ bookingData }) => {
                             : ''
                         }`}
                       >
-                        <div className="text-sm font-medium text-pine_teal-900">{room.name}</div>
-                        <div className="text-xs text-fern-600">{room.price}</div>
+                        <div className="text-sm font-semibold text-fern-700">{room.name}</div>
+                        <div className="text-xs text-fern-500">{room.price}</div>
                         {bookingData && bookingData.roomType === room.id && (
                           <div className="text-xs text-fern-500 mt-1">Selected</div>
                         )}
@@ -369,7 +369,7 @@ const BookingForm = ({ bookingData }) => {
                     name="guests"
                     value={formData.guests}
                     onChange={handleChange}
-                    className="block w-full pl-10 pr-3 py-2 border border-dust_grey-300 rounded-lg focus:ring-2 focus:ring-fern-200 focus:border-fern-400 text-pine_teal-900"
+                    className="block w-full pl-10 pr-3 py-2 border border-dust_grey-300 rounded-lg focus:ring-2 focus:ring-fern-200 focus:border-fern-400 text-black"
                   >
                     {[1, 2, 3, 4, 5, '6+'].map((num) => (
                       <option key={num} value={num}>
@@ -393,7 +393,7 @@ const BookingForm = ({ bookingData }) => {
                     rows="3"
                     value={formData.specialRequests}
                     onChange={handleChange}
-                    className="block w-full px-4 py-2 border border-dust_grey-300 rounded-lg focus:ring-2 focus:ring-fern-200 focus:border-fern-400 text-pine_teal-900 placeholder-dust_grey-400 transition-all duration-200"
+                    className="block w-full px-4 py-2 border border-dust_grey-300 rounded-lg focus:ring-2 focus:ring-fern-200 focus:border-fern-400 text-black placeholder-dust_grey-400 transition-all duration-200"
                     placeholder="Any special requirements or requests?"
                   />
                   <div className="absolute bottom-2 right-2 text-xs text-dust_grey-400">
