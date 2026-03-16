@@ -231,7 +231,6 @@ async def start_expiry_task():
     async def run_periodically():
         while True:
             await expire_pending_bookings()
-            await send_thank_you_emails_after_checkout()
             await asyncio.sleep(60)
     asyncio.create_task(run_periodically())
 
